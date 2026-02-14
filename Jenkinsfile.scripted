@@ -1,0 +1,20 @@
+node {
+
+    stage('Clone Repository') {
+        echo "Cloning Repository..."
+        checkout scm
+    }
+
+    stage('Build') {
+        echo "Building Maven Project..."
+        sh 'mvn clean package'
+    }
+
+    stage('Echo Build Status') {
+        echo "Build Successful!"
+    }
+
+    stage('Archive Artifacts') {
+        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+    }
+}
